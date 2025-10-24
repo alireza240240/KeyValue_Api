@@ -1,4 +1,4 @@
-
+from datetime import timedelta
 from pathlib import Path
 
 import os
@@ -77,7 +77,7 @@ DATABASES = {
         "NAME": os.getenv("DB_NAME", "kvdb"),
         "USER": os.getenv("DB_USER", "postgres"),
         "PASSWORD": os.getenv("DB_PASSWORD", "postgres"),
-        "HOST": os.getenv("DB_HOST", "localhost"),
+        "HOST": os.getenv("DB_HOST", "db"),
         "PORT": os.getenv("DB_PORT", "5432"),
     }
 }
@@ -127,6 +127,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Django_REST_Framework_Conf
 
 REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": [],
-    "DEFAULT_PERMISSION_CLASSES": [],
+    "DEFAULT_AUTHENTICATION_CLASSES": ("rest_framework_simplejwt.authentication.JWTAuthentication",),
+    "DEFAULT_PERMISSION_CLASSES": ('rest_framework.permissions.IsAuthenticated',),
+}
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=1), 
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7), 
 }
